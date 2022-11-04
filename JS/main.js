@@ -4,44 +4,56 @@ $(document).ready((_) => {
   let btn_toggle = 1;
 
   $("#btnToggle").click(function (e) {
-    if (btn_toggle) {
-      $("#btnToggle").children().eq("0").hide(400);
-      $("#btnToggle").children().eq("1").show(400);
-
-      $("#side-menu").animate(
-        {
-          left: 0,
-        },
-        400
-      );
-
-      $(".list-links")
-        .children()
-        .addClass("animate__animated animate__fadeInUpBig");
-    } else {
-      $("#btnToggle").children().eq("0").show(400);
-      $("#btnToggle").children().eq("1").hide(400);
-
-      $("#side-menu").animate(
-        {
-          left: -menuWidth,
-        },
-        400
-      );
-
-      $(".list-links")
-        .children()
-        .removeClass("animate__animated animate__fadeInUpBig");
-    }
-    btn_toggle = !btn_toggle;
+    btn_toggle ? showNavbar() : hideNavbar();
   });
+
+  // Show Side Nav Bar
+  function showNavbar() {
+    $("#btnToggle").children().eq("0").hide(400);
+    $("#btnToggle").children().eq("1").show(400);
+
+    $("#side-menu").animate(
+      {
+        left: 0,
+      },
+      400
+    );
+
+    $(".list-links")
+      .children()
+      .addClass("animate__animated animate__fadeInUpBig");
+
+    btn_toggle = !btn_toggle;
+  }
+  // Hide Side Nav Bar
+  function hideNavbar() {
+    $("#btnToggle").children().eq("0").show(400);
+    $("#btnToggle").children().eq("1").hide(400);
+
+    $("#side-menu").animate(
+      {
+        left: -menuWidth,
+      },
+      400
+    );
+
+    $(".list-links")
+      .children()
+      .removeClass("animate__animated animate__fadeInUpBig");
+
+    btn_toggle = !btn_toggle;
+  }
 
   $("#nav_Menu")
     .children()
-    .on("click", function (e) {
+    .on("click", function () {
       const secID = $(this).text();
       // hide all section
       hideSection();
+
+      // hide Navbar
+      hideNavbar();
+
       // show Target Section
       $(`#${secID}`).css("display", "block");
 
@@ -55,6 +67,7 @@ $(document).ready((_) => {
         // if we open Ingredients section => get all Ingredients data
         getIngredients();
       }
+
     });
 
   // hide all Sections
